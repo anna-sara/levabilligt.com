@@ -1,0 +1,14 @@
+<%- include("header", {title: title}); %>
+
+<div class="flow">
+    <% for (const row of res) { %>
+        <a href="<%= row.path %>/<%= row.id %>">
+            <div class="boxIndex">
+                <p class="databaseText"><%= row.category %></p> 
+                <strong><p class="searchName"><%= row.name %></p></strong> 
+                <img src="<%= row.img%>" >
+            </div>
+        </a>
+    <% }; %>
+</div>
+<%- include("footer"); %>

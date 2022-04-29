@@ -1,0 +1,55 @@
+workspace:
+  path: /
+
+pipeline:
+  master:
+    when:
+      branch: master
+    ssh:
+    image: appleboy/drone-ssh
+    host: web.levabilligt.com
+    username: levabilligt
+    port: 22
+    secrets: [ssh_key]
+    script:
+      - cd /home/prod-lev/levabilligt_website
+      - git pull
+      - chown -R prod-lev:prod-lev /home/prod-lev
+      - mysql --defaults-file=/etc/mysql/debian.cnf levabilligt_prod < /home/prod-lev/levabilligt_website/db/levabilligt_website.sql
+      - rm levabilligt_website/drone.yml
+      - systemctl restart prod-levabilligt.service
+      - curl -I https://prod.levabilligt.com/index
+      - echo "Deploy of prod.levabilligt.com done" | logger
+
+  dev:
+    when:
+      branch: dev
+    ssh:
+    image: appleboy/drone-ssh
+    host: web.levabilligt.com
+    username: levabilligt
+    port: 22
+    secrets: [ssh_key]
+    script:
+      - cd /home/stag-lev/levabilligt_website
+      - git pull
+      - chown -R stag-lev:stag-lev /home/stag-lev
+      - mysql --defaults-file=/etc/mysql/debian.cnf levabilligt_staging < /home/stag-lev/levabilligt_website/db/levabilligt_website.sql
+      - rm levabilligt_website/drone.yml
+      - systemctl restart staging-levabilligt.service
+      - curl -I https://dev.levabilligt.com/index
+      - echo "Deploy of dev.levabilligt.com done" | logger
+
+  notify:
+    when:
+      success: true
+      failure: true
+      change: true
+    image: plugins/matrix
+    settings:
+    homeserver: https://matrix.selea.se
+    roomid: jNNkLoxzHAkxIUJqKl:selea.se
+    username:
+      from_secret: matrix_username
+    password:
+      from_secret: matrix_password

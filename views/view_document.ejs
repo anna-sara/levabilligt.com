@@ -1,0 +1,37 @@
+<%- include("header", {title: title}); %>
+        <div>
+        <% for (const row of res[0]) { %>
+                <div class="view_content">
+                        <div class="box_right">
+                                <img src="<%- row.img %>" >
+                        </div>
+                        <div class="box_left">
+                                <br>
+                                <h2><%- row.name %></h2>
+                                <br>
+                                <%- row.text %>
+                                <br>
+                                <br>
+                                <a class="button" href="<%- row.download_link %>" target=_blank >Ladda ner</a></p> 
+                                <br>
+                                <p>Målsättningen är att låta allt material på denna webbplats vara gratis så vem som helst kan få ta del av det. 
+                                Vill man ändå visa extra uppskattning så finns möjligheten att ge en gåva som tack.</p>
+                                <br>
+                                <a class="button" href="<%- row.paypal_link %>" target=_blank>Gåva via Paypal</a>
+                                <br>
+                                <br>
+                                <br>
+                                <a class="button" onclick="openPopup()" cruser=>Gåva via Swish</a>
+                                <br>
+                                <br>
+                                <br>       
+                                <div id="overlay" onclick="closePopup()"></div>
+                                <div id="popup">
+                                <div id="popupClose" onclick="closePopup()">X</div>
+                                <p>Anna-Sara Sélea <br> <%- row.swish_number %></p> 
+                                </div>
+                        </div>
+                </div>
+                <% }; %>
+        </div>
+<%- include("footer"); %>

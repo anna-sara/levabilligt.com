@@ -1,0 +1,18 @@
+<%- include("header", {title: title}); %>
+        <div>
+        <% for (const row of res[0]) { %>
+                <div class="view_content">
+                        <div class="box_right">
+                                <img src="<%- row.img %>" >
+                        </div>
+                        <div class="box_left">
+                                <h2><%- row.name %></h2>
+                                <p><%- row.quantity %></p> 
+                                <%- row.ingredients %>
+                                <br>
+                                <%- row.text %> 
+                        </div>
+                </div>
+                <% }; %>
+        </div>
+<%- include("footer"); %>

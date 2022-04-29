@@ -1,0 +1,22 @@
+<%- include("header", {title: title}); %>
+        <div>
+        <% for (const row of res[0]) { %>
+                <div class="view_content">
+                        <div class="box_right">
+                                <img src="<%- row.img %>" >
+                        </div>
+                        <div class="box_left">
+                                <br>
+                                <h2><%- row.name %></h2>
+                                <br>
+                                <%- row.text %>
+                                <br>
+                                <br>
+                                <!-- <a class="button" href="<%- row.website_link %>" target=_blank>Besök hemsida</a> -->
+                                <br>
+                                <br>
+                        </div>
+                </div>
+                <% }; %>
+        </div>
+<%- include("footer"); %>
